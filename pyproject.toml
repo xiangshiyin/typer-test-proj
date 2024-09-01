@@ -8,9 +8,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-typer = "^0.12.5"
+typer = {extras = ["all"], version = "^0.12.5"}
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+typer-test-proj = "typer_test_proj.main:app"

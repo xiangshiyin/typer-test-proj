@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "typer-test-proj"
+name = "testcli"
 version = "0.1.0"
 description = "Play with Tyler for cli tool building"
 authors = ["Xiangshi Yin <piupiuyin@gmail.com>"]
@@ -16,4 +16,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-typer-test-proj = "typer_test_proj.main:app"
+testcli = "testcli.main:app"

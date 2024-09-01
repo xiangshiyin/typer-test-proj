@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "typer-test-proj"
+version = "0.1.0"
+description = "Play with Tyler for cli tool building"
+authors = ["Xiangshi Yin <piupiuyin@gmail.com>"]
+license = "Apache"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.12.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

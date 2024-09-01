@@ -6,8 +6,8 @@ For local test, run `poetry install`
 
 ## Commands to test
 For local test, run `poetry shell` to activate the virtual env, then run the following commands
-### `typer-test-proj hello`
-### `typer-test-proj goodbye`
+### `testcli hello`
+### `testcli goodbye`
 
 ## Reference
 - `Typer` documentations [[link](https://typer.tiangolo.com/#run-the-code)]

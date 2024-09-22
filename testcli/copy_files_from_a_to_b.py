@@ -92,11 +92,8 @@ def copy_a2b(
             destination_directory_full = os.path.join(
                 destination_directory,
                 str(int(file_name.split("-")[0]) % destination_slices),
-                file_name,
             )
-            destination_blob_name = os.path.join(
-                destination_directory_full, os.path.basename(source_blob_name)
-            )
+            destination_blob_name = os.path.join(destination_directory_full, file_name)
             futures.append(
                 executor.submit(
                     copy_file,

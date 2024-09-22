@@ -50,8 +50,13 @@ def main(source_bucket_name, source_directory, destination_bucket_name, destinat
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = []
         for source_blob_name in files_to_copy:
-            destination_directory_full_name = f"{destination_directory}/{int(os.path.basename(source_blob_name).split('-')[0]) % 10}/"
-            destination_blob_name = os.path.join(destination_directory_full_name, os.path.basename(source_blob_name))
+            file_name = os.path.basename(source_blob_name)
+            destination_directory_full = os.path.join(
+                destination_directory,
+                int(file_name.split('-')[0]) % 10,
+                file_name
+            )
+            destination_blob_name = os.path.join(destination_directory_full, os.path.basename(source_blob_name))
             futures.append(
                 executor.submit(
                     copy_file,

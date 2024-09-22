@@ -1,4 +1,3 @@
-import time
 import typer
 from typing import Optional
 from typing_extensions import Annotated
@@ -43,7 +42,6 @@ def copy(
         int, typer.Argument(help="Maximum number of workers to run concurrently")
     ] = 2,
 ):
-    start_ts = time.time()
     copy_a2b(
         source_bucket_name=source_bucket,
         source_directory_prefix=source_dir_prefix,
@@ -52,7 +50,6 @@ def copy(
         destination_slices=destination_slices,
         max_workers=max_workers,
     )
-    print(f"Total time taken: {time.time() - start_ts} seconds")
 
 
 if __name__ == "__main__":

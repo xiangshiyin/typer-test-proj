@@ -9,12 +9,13 @@ from typing import List
 # Initialize the Google Cloud Storage client
 storage_client = storage.Client()
 
+
 def copy_file(
     source_bucket_name: str,
     source_blob_name: str,
     destination_bucket_name: str,
     destination_blob_name: str,
-    progress_bar: tqdm
+    progress_bar: tqdm,
 ) -> None:
     """Copy a file from the source bucket to the destination bucket and update the progress bar.
 
@@ -35,6 +36,7 @@ def copy_file(
     with progress_bar_lock:
         progress_bar.update(1)
 
+
 def get_files_in_folder(bucket_name: str, directory: str) -> List[str]:
     """Retrieve a list of files in a specified directory within a bucket.
 
@@ -53,13 +55,14 @@ def get_files_in_folder(bucket_name: str, directory: str) -> List[str]:
     print(f"Got {len(files)} files in {time.time() - start_ts} seconds")
     return files
 
+
 def copy_a2b(
     source_bucket_name: str,
     source_directory_prefix: str,
     destination_bucket_name: str,
     destination_directory: str,
-    destination_slices: int = 2,
-    max_workers: int = 1
+    destination_slices: int = 1,
+    max_workers: int = 1,
 ) -> None:
     """Copy files from a source bucket to a destination bucket with multithreading support.
 
@@ -68,7 +71,7 @@ def copy_a2b(
         source_directory_prefix (str): Directory prefix in the source bucket.
         destination_bucket_name (str): Name of the destination bucket.
         destination_directory (str): Directory in the destination bucket.
-        destination_slices (int, optional): Number of slices for the destination directory. Defaults to 2.
+        destination_slices (int, optional): Number of slices for the destination directory. Defaults to 1.
         max_workers (int, optional): Maximum number of worker threads. Defaults to 1.
     """
     global progress_bar_lock
@@ -110,3 +113,5 @@ def copy_a2b(
             future.result()
     progress_bar.close()
 
+    # Print the total elapsed time
+    print(f"Total time used: {progress_bar.format_dict['elapsed']:.2f} seconds")

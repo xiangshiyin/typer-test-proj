@@ -1,5 +1,6 @@
 import os
 from google.cloud import storage
+from google.api_core.retry import Retry
 from concurrent.futures import ThreadPoolExecutor, Future
 from tqdm import tqdm
 import threading
@@ -31,10 +32,24 @@ def copy_file(
     destination_bucket = storage_client.bucket(destination_bucket_name)
     destination_blob = destination_bucket.blob(destination_blob_name)
 
-    # Copy the blob from the source bucket to the destination bucket
-    destination_blob.rewrite(source_blob)
-    with progress_bar_lock:
-        progress_bar.update(1)
+    # Define a custom retry strategy
+    retry_strategy = Retry(
+        initial=1.0,
+        maximum=60.0,
+        multiplier=2,
+        deadline=300.0,
+        predicate=Retry.if_exception_error,
+    )
+
+    try:
+        # Copy the blob from the source bucket to the destination bucket
+        destination_blob.rewrite(source_blob, retry=retry_strategy)
+        with progress_bar_lock:
+            progress_bar.update(1)
+    except Exception as e:
+        print(
+            f"An error occurred while copying {source_blob_name} to {destination_blob_name}: {e}"
+        )
 
 
 def get_files_in_folder(bucket_name: str, directory: str) -> List[str]:

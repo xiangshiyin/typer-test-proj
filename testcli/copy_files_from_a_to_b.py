@@ -38,7 +38,6 @@ def copy_file(
         maximum=60.0,
         multiplier=2,
         deadline=300.0,
-        predicate=Retry.if_exception_error,
     )
 
     try:
